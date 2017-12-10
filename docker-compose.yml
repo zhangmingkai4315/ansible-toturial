@@ -1,0 +1,75 @@
+version: '2'
+services:
+  ansible:
+    image: williamyeh/ansible:centos7
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.100            
+  centos7-01:
+    image: centos:7
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.1
+  centos7-02:
+    image: centos:7
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.2
+  centos6-01:
+    image: centos:6
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.3
+  centos6-02:
+    image: centos:6
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.4
+  centos5-01:
+    image: centos:5
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.5
+  centos5-02:
+    image: centos:5
+    entrypoint:
+        - tail
+        - -f
+        - /dev/null
+    networks:
+      cluster:
+        ipv4_address: 192.168.2.6
+
+networks:
+  cluster:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 192.168.2.0/24
+        gateway: 192.168.2.254
