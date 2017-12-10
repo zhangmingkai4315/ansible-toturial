@@ -2,6 +2,9 @@ version: '2'
 services:
   ansible:
     image: williamyeh/ansible:centos7
+    container_name: ansible
+    volumes:
+      - ./ansible:/etc/ansible
     entrypoint:
         - tail
         - -f
@@ -10,59 +13,41 @@ services:
       cluster:
         ipv4_address: 192.168.2.100            
   centos7-01:
-    image: centos:7
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
+    image: jdeathe/centos-ssh:centos-7
+    container_name: centos7-01
+    cap_add:
+      - ALL
+    environment:
+        SSH_SUDO: ALL=(ALL) NOPASSWD:ALL
     networks:
       cluster:
         ipv4_address: 192.168.2.1
   centos7-02:
-    image: centos:7
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
+    image: jdeathe/centos-ssh:centos-7
+    container_name: centos7-02
+    cap_add:
+      - ALL
+    environment:
+        SSH_SUDO: ALL=(ALL) NOPASSWD:ALL
     networks:
       cluster:
         ipv4_address: 192.168.2.2
   centos6-01:
-    image: centos:6
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
+    image: jdeathe/centos-ssh:centos-6
+    environment:
+        SSH_SUDO: ALL=(ALL) NOPASSWD:ALL
+    container_name: centos6-01
     networks:
       cluster:
         ipv4_address: 192.168.2.3
   centos6-02:
-    image: centos:6
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
+    image: jdeathe/centos-ssh:centos-6
+    container_name: centos6-02
+    environment:
+        SSH_SUDO: ALL=(ALL) NOPASSWD:ALL
     networks:
       cluster:
         ipv4_address: 192.168.2.4
-  centos5-01:
-    image: centos:5
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
-    networks:
-      cluster:
-        ipv4_address: 192.168.2.5
-  centos5-02:
-    image: centos:5
-    entrypoint:
-        - tail
-        - -f
-        - /dev/null
-    networks:
-      cluster:
-        ipv4_address: 192.168.2.6
 
 networks:
   cluster:
