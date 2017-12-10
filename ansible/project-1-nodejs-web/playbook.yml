@@ -1,0 +1,47 @@
+---
+# 该项目用于实现一个简单的nodejs项目
+
+- hosts: 192.168.2.3
+  vars:
+    web_location: /usr/local/web
+  tasks:
+  - name: Install EPEL repo.
+    yum:
+      name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+      state: present
+  - name: Import EPEL GPG key.
+    rpm_key:
+      key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+      state: present
+  - name: Install remi repo.
+    yum:
+      name: http://rpms.famillecollet.com/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm
+      state: present
+  - name: Import remi GPG key.
+    rpm_key:
+      key: http://rpms.remirepo.net/RPM-GPG-KEY-remi
+      state: present
+
+  - name: install nodejs
+    yum: "name={{ item }} state=present enablerepo=epel"
+    with_items:
+      - npm
+      - nodejs
+
+  - name: install forever 
+    npm: name=forever global=yes state=latest
+
+  - name: check web folder exist
+    file: "path={{ web_location }} state=directory"
+  - name: copy file to app
+    copy: "src=app dest={{web_location}}"
+  - name: install deps
+    npm: "path={{web_location}}/app"
+
+  - name: get list
+    command: forever list
+    register: forever_list
+    changed_when: false
+  - name: start with forever
+    command: "forever start {{web_location}}/app/app.js"
+    when: "forever_list.stdout.find('{{web_location}}/app/app.js')==-1"
