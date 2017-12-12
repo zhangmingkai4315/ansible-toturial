@@ -1,0 +1,7 @@
+---
+httpd_port: 80
+ntpserver: 192.168.2.1
+dbuser: user
+dbname: lamp
+upassword: password
+repository: https://github.com/bennojoy/mywebapp.git

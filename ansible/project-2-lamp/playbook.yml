@@ -1,0 +1,20 @@
+---
+
+- name: install common configuration to all nodes
+  hosts: web
+  remote_user: root
+  roles:
+    - common
+
+- name: install web components to webserver
+  hosts: web
+  remote_user: root
+  roles:
+    - web
+  
+- name: install db configuration to db server
+  hosts: db
+  remote_user: root
+  roles:
+    - db
+  
