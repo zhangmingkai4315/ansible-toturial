@@ -1,0 +1,11 @@
+---
+  - hosts: all
+    tasks:
+      - name: "setting env for current user"
+        lineinfile: dest=~/.bash_profile regexp=^NODE_ENV= line=NODE_ENV=production
+      - name: "get setting env value"
+        shell: 'source ~/.bash_profile && echo $NODE_ENV'
+        register: test
+      
+      - name: "print the env"
+        debug: msg="the value is {{ test.stdout }}"

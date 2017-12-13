@@ -7,7 +7,7 @@
 
 
 [centos7]
-192.168.2.1
+192.168.2.1  key=value4
 192.168.2.2
 [centos6]
 192.168.2.3
@@ -24,6 +24,7 @@ centos7
 
 [centos:vars]
 os=centos
+key=value3
 ansible_ssh_private_key_file=/etc/ansible/id_rsa_insecure
 ansible_user=app-admin
 ansible_ssh_pass=''

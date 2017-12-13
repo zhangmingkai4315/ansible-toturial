@@ -1,0 +1,10 @@
+---
+  - hosts: all
+    tasks:
+      - name: "print the env"
+        debug: msg="the value is {{ key }}"
+      - name: "print the env"
+        debug: msg="the value is {{ ansible_distribution }} and major release is {{ansible_distribution_major_version|int}}"
+      - name: "print the ipaddress"
+        debug: msg="the address is {{ansible_eth0}}"
+        when: ansible_distribution == 'CentOS' and ansible_distribution_major_version|int == 6
