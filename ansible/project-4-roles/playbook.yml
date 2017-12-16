@@ -1,0 +1,9 @@
+--- 
+# 用于用户的初始化操作
+
+- hosts: all
+  remote_user: root
+  roles:
+    - {role: nginx}
+    # - { role: webserver_debian, when: ansible_os_family=="Debian"}
+    # - { role: webserver_redhat, when: ansible_os_family=="RedHat"} 
